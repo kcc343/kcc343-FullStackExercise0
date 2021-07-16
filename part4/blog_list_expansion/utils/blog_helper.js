@@ -57,7 +57,9 @@ const usersInDb = async () => {
 }
 
 const specificBlog = async (id) => {
+  const blogs = await blog.find({})
   const oneBlog = await blog.findById(id)
+  console.log(blogs)
   return oneBlog.toJSON()
 }
 

@@ -57,12 +57,12 @@ describe('adding a blog', () => {
       url: "https://myanimelist.net/anime/31646/3-gatsu_no_Lion",
     }
   
-    await api
+    const newBlogMade = await api
       .post('/api/blogs')
       .send(newBlog)
       .expect(201)
-  
-    const findBlog = await helper.specificBlog(newBlog._id)
+
+    const findBlog = await helper.specificBlog(newBlogMade.body.id)
     expect(findBlog.likes).toBe(0)
   })
 
