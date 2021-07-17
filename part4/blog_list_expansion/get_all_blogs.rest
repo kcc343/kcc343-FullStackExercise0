@@ -24,3 +24,24 @@ content-type: application/json
 
 ###
 GET http://localhost:3003/api/users
+
+###
+POST http://localhost:3003/api/login
+content-type: application/json
+
+{
+    "username": "root",
+    "password": "salainen"
+}
+
+###
+POST http://localhost:3003/api/blogs
+content-type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYwZjFjODhjNmMzMzczMzNmNGEyNGM0YSIsImlhdCI6MTYyNjQ4MzM2Nn0.q3J23XdIs9OBEU5xm3FMBumCM4XDR51ua9Nc0hgcqhY
+
+{
+    "title": "token authentication",
+    "author": "kris",
+    "url": "https://fullstackopen.com/en/part4/token_authentication",
+    "likes": 9
+}
