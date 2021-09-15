@@ -36,8 +36,8 @@ content-type: application/json
 
 ###
 POST http://localhost:3003/api/blogs
-content-type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYwZjFjODhjNmMzMzczMzNmNGEyNGM0YSIsImlhdCI6MTYyNjQ4MzM2Nn0.q3J23XdIs9OBEU5xm3FMBumCM4XDR51ua9Nc0hgcqhY
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYwZjFjODhjNmMzMzczMzNmNGEyNGM0YSIsImlhdCI6MTYzMTcyNDc2N30.chsB3m_Wogq5v4trscGDILaVyXqzceUW_AdC0E8O-gw
 
 {
     "title": "token authentication",
@@ -45,3 +45,7 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb
     "url": "https://fullstackopen.com/en/part4/token_authentication",
     "likes": 9
 }
+
+###
+DELETE http://localhost:3003/api/blogs/61422544a05f5b3cacff9361
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYwZjFjODhjNmMzMzczMzNmNGEyNGM0YSIsImlhdCI6MTYzMTcyNDc2N30.chsB3m_Wogq5v4trscGDILaVyXqzceUW_AdC0E8O-gw
