@@ -1,7 +1,6 @@
-const jwt = require('jsonwebtoken')
 const blogRouter = require('express').Router()
+const userExtractor = require("../utils/middleware").userExtractor
 const Blog = require('../models/blog')
-const User = require('../models/user')
 require('express-async-errors')
 
 blogRouter.get('/', async (request, response) => {
@@ -10,19 +9,15 @@ blogRouter.get('/', async (request, response) => {
   response.json(blogs.map(blog => blog.toJSON()));
 })
 
-blogRouter.post('/', async (request, response) => {
+blogRouter.post('/', userExtractor, async (request, response) => {
   const body = request.body
-  const decodedToken = jwt.verify(request.token, process.env.SECRET)
-  if (!decodedToken.id) {
-    return response.status(401).json({ error: 'token missing or invalid' })
-  }
   if (!body.likes) {
     body.likes = 0
   }
   if (!body.title || !body.url) {
     return response.status(400).json({ error: "title and url required"})
   } 
-  const user = await User.findById(decodedToken.id)
+  const user = request.user
 
   const blog = new Blog({
       title: body.title,
@@ -38,25 +33,20 @@ blogRouter.post('/', async (request, response) => {
   response.status(201).json(savedBlog)
 })
 
-blogRouter.delete('/:id', async (request, response) => {
-  const body = request.body
-  console.log(body)
-  const decodedToken = jwt.verify(request.token, process.env.SECRET)
-
-  if (!request.token || !decodedToken.id) {
-    return response.status(401).json({ error: 'token missing or invalid' })
-  }
-
+blogRouter.delete('/:id', userExtractor, async (request, response) => {
+  const user = request.user
   const blog = await Blog.findById(request.params.id)
-  console.log(blog)
-  if (blog.user.toString() === decodedToken.id) {
-      await blog.deleteOne()
-      response.status(204).end()
+  if (!blog) {
+    return response.status(401).json({ error: 'blog does not exist' })
   }
-  response.status(401).json({ error: 'token missing or invalid user' })
+  if (blog.user.toString() === user._id.toString()) {
+      await blog.deleteOne()
+      return response.status(204).end()
+  }
+  return response.status(401).json({ error: 'token missing or invalid user' })
 })
 
-blogRouter.put('/:id', async (request, response) => {
+blogRouter.put('/:id', userExtractor, async (request, response) => {
   const body = request.body
   const blog = {
     likes: body.likes
